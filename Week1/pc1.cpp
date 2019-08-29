@@ -85,7 +85,7 @@ double median(int *const numArr, int numStudents)
     // first, sort arrray
     std::sort(numArr, numArr + numStudents);
     // If numStudents is odd, return the middle, else get the two around the middle and return the midpoint
-    if (numStudents & 2 != 0)
+    if (numStudents % 2 != 0)
     {
         size_t middleIdx = (numStudents - 1) / 2;
         return *(numArr + middleIdx);
