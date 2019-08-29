@@ -4,13 +4,14 @@
 * Benjamin Lovy
 */
 
+#include <algorithm>
 #include <iostream>
 #include <limits>
 #include <vector>
 
 // Function prototypes
 double mean(const int *const numArr, int numStudents);
-double median(const int *const numArr, int numStudents);
+double median(int *const numArr, int numStudents);
 int mode(const int *const numArr, int numStudents);
 
 int main()
@@ -79,10 +80,11 @@ double mean(const int *const numArr, int numStudents)
 }
 
 // Calculate the median of an array of ints
-// TODO sort the set first
-double median(const int *const numArr, int numStudents)
+double median(int *const numArr, int numStudents)
 {
-    // If numStudents is odd, return the middle, else divide the two around the middle
+    // first, sort arrray
+    std::sort(numArr, numArr + numStudents);
+    // If numStudents is odd, return the middle, else get the two around the middle and return the midpoint
     if (numStudents & 2 != 0)
     {
         size_t middleIdx = (numStudents - 1) / 2;
@@ -90,9 +92,12 @@ double median(const int *const numArr, int numStudents)
     }
     else
     {
-        int lower = *(numArr + ((numStudents / 2) - 1));
-        int higher = *(numArr + (numStudents / 2));
-        return static_cast<double>(higher) / static_cast<double>(lower);
+        // grab higher and lower values
+        size_t middleIdx = (numStudents / 2);
+        int lower = *(numArr + (middleIdx - 1));
+        int higher = *(numArr + middleIdx);
+        // add them and divide by two
+        return (static_cast<double>(higher) + static_cast<double>(lower)) / 2.0;
     }
 }
 
@@ -109,7 +114,7 @@ typedef struct statFreq
     statFreq(int n)
     {
         member = n;
-        freq = 0;
+        freq = 1;
     }
     void inc()
     {
@@ -127,29 +132,30 @@ int mode(const int *const numArr, int numStudents)
     for (int i = 0; i < numStudents; i++)
     {
         bool found = false;
-        for (auto freq : frequencies)
+        for (auto& f : frequencies)
         {
-            if (freq.member == numArr[i])
+            if (f.member == numArr[i])
             {
-                freq.inc();
+                // If we found an entry, increment the frequency and move on
+                f.inc();
                 found = true;
                 break;
             }
         }
-        if (!found)
-        {
+        if (!found) {
             // If we didn't locate and increment a frequency, add a new one
             frequencies.push_back(statFreq(numArr[i]));
         }
     }
 
-    // Return the highest frequency - TODO return ALL the winners of the highest frequency
+    // Return the highest frequency
     statFreq max{};
-    for (auto freq : frequencies)
+
+    for (auto f : frequencies)
     {
-        if (freq.freq > max.freq)
+        if (f.freq > max.freq)
         {
-            max = freq;
+            max = f;
         }
     }
 
