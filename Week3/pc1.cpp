@@ -20,6 +20,8 @@ class LetterCounter
     int countConsonants();
     // Get number of vowels in cString
     int countVowels();
+    // Get amount of spaces in cString
+    int countSpaces();
     // Display number of consonants in cString
     void printConsonants();
     // Display number of vowels in cString
@@ -32,8 +34,6 @@ class LetterCounter
     void promptCString();
     // Show the letter counting options
     void showMenu();
-    // Get length of cString - ??
-    // int size();
 
 public:
     // Default constructor will prompt user for string
@@ -61,7 +61,7 @@ LetterCounter::~LetterCounter()
 
 int LetterCounter::countConsonants()
 {
-    return strlen(cString) - countVowels();
+    return strlen(cString) - countVowels() - countSpaces();
 }
 
 int LetterCounter::countVowels()
@@ -70,6 +70,17 @@ int LetterCounter::countVowels()
     for (int i = 0; cString[i] != '\0'; i++)
     {
         if (isVowel(cString[i]))
+            ret++;
+    }
+    return ret;
+}
+
+int LetterCounter::countSpaces()
+{
+    int ret = 0;
+    for (int i = 0; cString[i] != '\0'; i++)
+    {
+        if (cString[i] == ' ')
             ret++;
     }
     return ret;
@@ -107,6 +118,7 @@ void LetterCounter::promptCString()
     // Prompt user
     char userInput[maxLength];
     cout << "Enter string> ";
+    cin.ignore();
     cin.getline(userInput, maxLength);
     // Copy input into string
     strcpy(cString, userInput);
@@ -139,6 +151,8 @@ void LetterCounter::run()
             printConsonants();
             break;
         case 'd':
+            // Clear current and prompt for new
+            cString = nullptr;
             promptCString();
             break;
         case 'e':
