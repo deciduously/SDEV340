@@ -13,27 +13,25 @@ class LetterCounter
     // String to count
     char *cString;
     // Maximum string length
-    static int maxLength;
+    static unsigned int maxLength;
     // Vowel characters
     static char vowels[];
     // Get number of consonants in cString
-    int countConsonants();
+    int countConsonants() const;
     // Get number of vowels in cString
-    int countVowels();
+    int countVowels() const;
     // Get amount of spaces in cString
-    int countSpaces();
+    int countSpaces() const;
     // Display number of consonants in cString
-    void printConsonants();
+    void printConsonants() const;
     // Display number of vowels in cString
-    void printVowels();
-    // Get a cString to use
-    static char *getCString();
+    void printVowels() const;
     // Predicate for whether character is lower case vowel
-    static bool isVowel(char c);
+    static bool isVowel(const char c);
     // Prompt for a new cString
     void promptCString();
     // Show the letter counting options
-    void showMenu();
+    void showMenu() const;
 
 public:
     // Default constructor will prompt user for string
@@ -44,7 +42,7 @@ public:
     void run();
 };
 
-int LetterCounter::maxLength = 80;
+unsigned int LetterCounter::maxLength = 80;
 
 char LetterCounter::vowels[] = {'a', 'e', 'i', 'o', 'u'}; // Excluding 'y' - that's a much tougher problem
 
@@ -61,7 +59,7 @@ LetterCounter::~LetterCounter()
 }
 
 // Get number of consonants in cString
-int LetterCounter::countConsonants()
+int LetterCounter::countConsonants() const
 {
     int ret = 0;
     for (int i = 0; cString[i] != '\0'; i++)
@@ -73,7 +71,7 @@ int LetterCounter::countConsonants()
 }
 
 // Get number of vowels in cString
-int LetterCounter::countVowels()
+int LetterCounter::countVowels() const
 {
     int ret = 0;
     for (int i = 0; cString[i] != '\0'; i++)
@@ -85,7 +83,7 @@ int LetterCounter::countVowels()
 }
 
 // Get amount of spaces in cString
-int LetterCounter::countSpaces()
+int LetterCounter::countSpaces() const
 {
     int ret = 0;
     for (int i = 0; cString[i] != '\0'; i++)
@@ -97,19 +95,19 @@ int LetterCounter::countSpaces()
 }
 
 // Display number of consonants in cString
-void LetterCounter::printConsonants()
+void LetterCounter::printConsonants() const
 {
     std::cout << "Number of consonants in " << cString << ": " << countConsonants() << "\n";
 }
 
 // Display number of vowels in cString
-void LetterCounter::printVowels()
+void LetterCounter::printVowels() const
 {
     std::cout << "Number of vowels in " << cString << ": " << countVowels() << "\n";
 }
 
 // Predicate for whether character is lower case vowel
-bool LetterCounter::isVowel(char c)
+bool LetterCounter::isVowel(const char c)
 {
     // Vowel size won't change
     for (int i = 0; i < 5; i++)
@@ -183,7 +181,7 @@ void LetterCounter::run()
 }
 
 // Show the letter counting options
-void LetterCounter::showMenu()
+void LetterCounter::showMenu() const
 {
     using std::cout;
     cout << "String: " << cString << "\n\n";
