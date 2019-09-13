@@ -54,16 +54,25 @@ LetterCounter::LetterCounter()
     promptCString();
 }
 
+// Destructor
 LetterCounter::~LetterCounter()
 {
     delete cString;
 }
 
+// Get number of consonants in cString
 int LetterCounter::countConsonants()
 {
-    return strlen(cString) - countVowels() - countSpaces();
+    int ret = 0;
+    for (int i = 0; cString[i] != '\0'; i++)
+    {
+        if (tolower(cString[i]) >= 97 && tolower(cString[i]) <= 122 && !isVowel(cString[i]))
+            ret++;
+    }
+    return ret;
 }
 
+// Get number of vowels in cString
 int LetterCounter::countVowels()
 {
     int ret = 0;
@@ -75,6 +84,7 @@ int LetterCounter::countVowels()
     return ret;
 }
 
+// Get amount of spaces in cString
 int LetterCounter::countSpaces()
 {
     int ret = 0;
@@ -86,16 +96,19 @@ int LetterCounter::countSpaces()
     return ret;
 }
 
+// Display number of consonants in cString
 void LetterCounter::printConsonants()
 {
     std::cout << "Number of consonants in " << cString << ": " << countConsonants() << "\n";
 }
 
+// Display number of vowels in cString
 void LetterCounter::printVowels()
 {
     std::cout << "Number of vowels in " << cString << ": " << countVowels() << "\n";
 }
 
+// Predicate for whether character is lower case vowel
 bool LetterCounter::isVowel(char c)
 {
     // Vowel size won't change
@@ -109,6 +122,7 @@ bool LetterCounter::isVowel(char c)
     return false;
 }
 
+// Prompt for a new cString
 void LetterCounter::promptCString()
 {
     using std::cin;
@@ -123,6 +137,7 @@ void LetterCounter::promptCString()
     strcpy(cString, userInput);
 }
 
+// Run loop
 void LetterCounter::run()
 {
     using std::cerr;
@@ -172,7 +187,7 @@ void LetterCounter::run()
 void LetterCounter::showMenu()
 {
     using std::cout;
-    cout << "Word: " << cString << "\n\n";
+    cout << "String: " << cString << "\n\n";
     cout << "A) Count the number of vowels in the string\n";
     cout << "B) Count the number of consonants in the string\n";
     cout << "C) Count both the vowels and consonants in the string\n";
