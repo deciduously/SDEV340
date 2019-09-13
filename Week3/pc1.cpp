@@ -102,7 +102,7 @@ bool LetterCounter::isVowel(char c)
     for (int i = 0; i < 5; i++)
     {
         // if match, return true
-        if (vowels[i] == c)
+        if (vowels[i] == tolower(c))
             return true;
     }
     // If not found, return false
@@ -118,7 +118,6 @@ void LetterCounter::promptCString()
     // Prompt user
     char userInput[maxLength];
     cout << "Enter string> ";
-    cin.ignore();
     cin.getline(userInput, maxLength);
     // Copy input into string
     strcpy(cString, userInput);
@@ -152,7 +151,8 @@ void LetterCounter::run()
             break;
         case 'd':
             // Clear current and prompt for new
-            cString = nullptr;
+            delete cString;
+            cin.ignore();
             promptCString();
             break;
         case 'e':
