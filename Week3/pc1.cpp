@@ -175,7 +175,6 @@ void LetterCounter::run()
             cout
                 << "Goodbye!\n";
             return;
-            break;
         default:
             cerr << "Unknown option, try again\n";
             continue;
