@@ -1,6 +1,6 @@
 /*
 * SDEV 340 Week 4 Problem 1
-* Display the first 10 lines of a filename given.  If entire file is shown, indicate this
+* Display the first 10 lines of a filename given.  If entire file is shown, indicate so
 * Benjamin Lovy
 */
 
@@ -8,18 +8,24 @@
 #include <iostream>
 #include <string>
 
+// Class to preview the first several lines of a file
 class FileDisplay
 {
+    // File object
     std::ifstream f;
+    // Number of lines included in preview
+    static const int linesToShow;
 
 public:
     // Constructor
     FileDisplay();
     // Destructor
     ~FileDisplay();
-    // Show first ten lines of file
+    // Show first lines of file
     void showPreview();
 };
+
+const int FileDisplay::linesToShow = 10;
 
 // Constructor
 FileDisplay::FileDisplay()
@@ -42,7 +48,7 @@ FileDisplay::~FileDisplay()
 {
     f.close();
 }
-// Show first ten lines of file
+// Show first lines of file
 void FileDisplay::showPreview()
 {
     using std::cout;
@@ -50,23 +56,22 @@ void FileDisplay::showPreview()
     using std::string;
     string line;
     int counter = 0;
-    while (getline(f, line) && counter < 10)
+    while (getline(f, line))
     {
         cout << line << endl;
         counter++;
+        if (counter == linesToShow)
+            break;
     }
-    if (counter < 9)
-    {
-        cout << "Entire file displayed\n";
-    }
-    else
-    {
-        cout << "Long file - first ten lines displayed\n";
-    }
+    if (f.eof())
+        cout << "Entire file displayed";
 }
 int main()
 {
+    // Instantiate object
     FileDisplay fd;
+    // Show file preview
     fd.showPreview();
+    // Exit success
     return 0;
 }
