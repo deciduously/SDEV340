@@ -61,16 +61,38 @@ void JokeViewer::displayJoke()
 // Display the final line of the punchline
 void JokeViewer::displayPunchline()
 {
+    using std::cout;
     using std::ios;
     using std::string;
-    // seek to end of file
-    punchlineFile.seekg(0L, ios::end);
+    // seek to last character of file
+    punchlineFile.seekg(-1L, ios::end);
+    // if its a newline, seek back again
+    if (punchlineFile.peek() == '\n')
+        punchlineFile.seekg(-1, ios::cur);
+
+    // seek backwards to previous newline
+    char ch;
+    do
+    {
+        punchlineFile.seekg(-1L, ios::cur);
+        punchlineFile.get(ch);
+        cout << ch;
+    } while (ch != '\n');
+
+    // output the rest of the file
+    // first, clear clags - EOF got set
+    punchlineFile.clear();
+    while (!punchlineFile.eof())
+    {
+        punchlineFile.seekg(1L, ios::cur);
+    }
 }
 
 // Display joke and punchline
 void JokeViewer::joke()
 {
     displayJoke();
+    displayPunchline();
 }
 
 int main()
