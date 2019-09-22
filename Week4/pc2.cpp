@@ -12,8 +12,6 @@ class JokeViewer
 {
     std::ifstream jokeFile;
     std::ifstream punchlineFile;
-    static const std::string jokeFilename;
-    static const std::string punchlineFilename;
     // Display each line in the jokefile
     void displayJoke();
     // Display the final line by seeking to the end
@@ -28,14 +26,30 @@ public:
     void joke();
 };
 
-const std::string JokeViewer::jokeFilename = "joke.txt";
-const std::string JokeViewer::punchlineFilename = "punchline.txt";
-
 // Constructor
 JokeViewer::JokeViewer()
 {
-    jokeFile.open(jokeFilename);
-    punchlineFile.open(punchlineFilename);
+    using std::cin;
+    using std::cout;
+    using std::string;
+    string fileName;
+    cout << "Enter joke filename> ";
+    getline(cin, fileName);
+    jokeFile.open(fileName);
+    if (jokeFile.fail())
+    {
+        std::cerr << "The file was not found\n";
+        std::exit(1);
+    }
+    cout << "Enter punchline filename> ";
+    cin.clear();
+    getline(cin, fileName);
+    punchlineFile.open(fileName);
+    if (punchlineFile.fail())
+    {
+        std::cerr << "The file was not found\n";
+        std::exit(1);
+    }
 }
 
 // Destructor
