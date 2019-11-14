@@ -35,6 +35,7 @@ protected:
 
 public:
     SimpleLinkedList();
+    ~SimpleLinkedList();
     void add(T x);
 };
 
@@ -44,6 +45,18 @@ template <class T>
 SimpleLinkedList<T>::SimpleLinkedList()
 {
     head = nullptr;
+}
+
+template <class T>
+SimpleLinkedList<T>::~SimpleLinkedList()
+{
+    ListNode<T> *currentNodePtr = head;
+    while (currentNodePtr)
+    {
+        ListNode<T> *toDelete = currentNodePtr;
+        currentNodePtr = currentNodePtr->next;
+        delete toDelete;
+    }
 }
 
 template <class T>
