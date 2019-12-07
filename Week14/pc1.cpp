@@ -6,7 +6,6 @@
 */
 
 #include <iostream>
-#include <string>
 #include <vector>
 
 template <class T> // T must be numeric: int, double, etc, or have `<` overloaded
@@ -170,7 +169,6 @@ std::ostream &operator<<(std::ostream &s, SimpleBST<T> &Bst)
 
 int main() {
     using std::cout;
-    using std::vector;
 
     // Init tree
     SimpleBST<double> Bst;
