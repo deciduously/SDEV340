@@ -176,7 +176,7 @@ int main() {
     SimpleBST<double> Bst;
 
     // Store some numbers, including a duplicate.
-    double numbers [] = {303.4, 7.7, 9.23, 2.0, 5.45, 3.3, 45.0, 234.34, 67.4656, 28.9, 27.5, 3.352938};
+    double numbers [] = {303.4, 7.7, 9.23, 2.0, 5.45, 3.3, 45.0, 234.34, 67.4656, 28.9, 3.3, 27.5, 3.352938};
     for (auto n : numbers)
     {
         cout << "Inserting " << n << "\n";
