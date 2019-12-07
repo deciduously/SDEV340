@@ -38,7 +38,6 @@ public:
     void insert(T);
     bool search(T);
     void inorder(std::vector<T> &);
-    void displayInorder();
 };
 
 template <class T>
@@ -132,9 +131,9 @@ bool SimpleBST<T>::search(T value, BTNode<T> *&tree)
         if (tree->val == value) // equal within tolerance
             return true;
         else if (value < tree->val)
-            search(value, tree->left);
+            return search(value, tree->left);
         else
-            search(value, tree->right);
+            return search(value, tree->right);
     }
     return false; // no tree - definitely no value match
 }
@@ -185,7 +184,7 @@ int main() {
     }
 
     // Demonstrate search()
-    cout << "Is 303.4 in the list? " << Bst.search(303.4) << "\n";
+    cout << "Is 45.0 in the list? " << Bst.search(45.0) << "\n";
     cout << "Is 45.1 in the list? " << Bst.search(45.1) << "\n";
 
     // Demonstrate inorder()
