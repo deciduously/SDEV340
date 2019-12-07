@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 
-template <class T> // T must be numeric: int, double, etc, or have `<` overloaded
+template <class T> // T must be numeric: int, double, etc, or have `<` and `==` overloaded
 struct BTNode
 {
     T val;
@@ -28,9 +28,10 @@ BTNode<T>::BTNode(T value, BTNode *lptr, BTNode *rptr)
 template <class T>
 class SimpleBST {
     BTNode<T> *tree;
-    void destroySubTree(BTNode<T> *&);
-    void inorder(BTNode<T> *&, std::vector<T> &);
-    bool search(T, BTNode<T> *&);
+    static void destroySubTree(BTNode<T> *&);
+    static void inorder(BTNode<T> *&, std::vector<T> &);
+    static void insert(BTNode<T> *&, T);
+    static bool search(T, BTNode<T> *&);
 public:
     SimpleBST();
     ~SimpleBST();
@@ -65,6 +66,34 @@ void SimpleBST<T>::destroySubTree(BTNode<T> *&tree)
 template <class T>
 void SimpleBST<T>::insert(T x)
 {
+    insert(tree, x);
+}
+
+template <class T>
+bool SimpleBST<T>::search(T val)
+{
+    return search(val, tree);
+}
+
+template <class T>
+void SimpleBST<T>::inorder(std::vector<T> &v)
+{
+    inorder(tree, v);
+}
+
+template <class T>
+void SimpleBST<T>::inorder(BTNode<T> *&tree, std::vector<T> &v)
+{
+    if (!tree)
+        return;
+    inorder(tree->left, v);
+    v.push_back(tree->val);
+    inorder(tree->right, v);
+}
+
+template <class T>
+void SimpleBST<T>::insert(BTNode<T> *&tree, T x)
+{
     if (!tree)
     {
         tree = new BTNode<T>(x);
@@ -97,28 +126,6 @@ void SimpleBST<T>::insert(T x)
             }
         }
     }
-}
-
-template <class T>
-bool SimpleBST<T>::search(T val)
-{
-    return search(val, tree);
-}
-
-template <class T>
-void SimpleBST<T>::inorder(std::vector<T> &v)
-{
-    inorder(tree, v);
-}
-
-template <class T>
-void SimpleBST<T>::inorder(BTNode<T> *&tree, std::vector<T> &v)
-{
-    if (!tree)
-        return;
-    inorder(tree->left, v);
-    v.push_back(tree->val);
-    inorder(tree->right, v);
 }
 
 template <class T>
@@ -186,7 +193,7 @@ int main() {
     cout << "Is 45.1 in the list? " << Bst.search(45.1) << "\n";
 
     // Demonstrate inorder()
-    cout << "All in order: " << Bst;
+    cout << "All in order: " << Bst << "\n";
 
     // Exit success
     return 0;
